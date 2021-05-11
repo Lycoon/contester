@@ -68,3 +68,4 @@ outTmp/
 target/
 /test.output
 /kotlin-native/dist
+twitter4j.properties
