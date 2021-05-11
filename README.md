@@ -1,2 +1,2 @@
-# contester
+# Contester
 Twitter crawler bot
