@@ -3,10 +3,31 @@ import twitter4j.TwitterFactory
 
 fun main() {
     val twitter = TwitterFactory.getSingleton()
-    val query = Query("#contest")
-    query.resultType = Query.ResultType.recent
-    val result = twitter.search(query)
+    val query = Query("(#contest OR #giveaway OR #concours OR #prize) +exclude:retweets +exclude:replies -airdrop")
+    query.resultType(Query.ResultType.popular)
 
-    for (status in result.tweets)
-        println("@" + status.user.screenName.toString() + ":" + status.text)
+    var result = twitter.search(query)
+
+    //twitter.updateStatus("bruh")
+
+    for (status in result.tweets) {
+        print("@" + status.user.screenName.toString() + ": ")
+
+        for (entity in status.hashtagEntities)
+            print(entity.text + " | ")
+
+        println()
+    }
+
+    query.maxId = result.tweets.last().id - 1
+    result = twitter.search(query)
+
+    for (status in result.tweets) {
+        print("@" + status.user.screenName.toString() + ": ")
+
+        for (entity in status.hashtagEntities)
+            print(entity.text + " | ")
+
+        println()
+    }
 }
