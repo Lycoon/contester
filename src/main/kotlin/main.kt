@@ -1,5 +1,21 @@
-import twitter4j.Query
-import twitter4j.TwitterFactory
+import twitter4j.*
+
+fun replyTo(tweets: List<Status>, message: String) {
+    val twitter = TwitterFactory().instance
+    var reply: Status?
+    for (tweet in tweets) {
+        try {
+            reply = twitter.updateStatus(
+                StatusUpdate(
+                    "@" + tweet.user.screenName + " " + message
+                ).inReplyToStatusId(tweet.id)
+            )
+            println("Posted reply " + reply.id + " in response to tweet " + reply.inReplyToStatusId)
+        } catch (e: TwitterException) {
+            e.printStackTrace()
+        }
+    }
+}
 
 
 fun main() {
