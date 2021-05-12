@@ -29,21 +29,30 @@ fun main() {
         for (status in result.tweets) {
             val text = status.text.toLowerCase()
             print("@" + status.user.screenName.toString() + ": ")
-            print("" + text.contains("follow") + " ")
+            println("" + text.contains("follow"))
 
             println(
                 status.hashtagEntities.joinToString(
                     separator = " | ",
-                    prefix = "\t[",
+                    prefix = "\thashtags = [",
                     postfix = "]"
                 ) { entity -> entity.text })
 
             println(
                 status.userMentionEntities.joinToString(
                     separator = " | ",
-                    prefix = "\t[",
+                    prefix = "\tmentions = [",
                     postfix = "]"
                 ) { entity -> entity.text })
+
+            println(
+                status.symbolEntities.joinToString(
+                    separator = " | ",
+                    prefix = "\tsymbols = [",
+                    postfix = "]"
+                ) { entity -> entity.text })
+            
+            println()
         }
 
         query.maxId = result.tweets.last().id - 1
